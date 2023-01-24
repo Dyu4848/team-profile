@@ -1,0 +1,23 @@
+{
+  "name": "team-profile",
+  "version": "1.0.0",
+  "description": "Employee Tracking",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dyu4848/team-profile.git"
+  },
+  "keywords": [
+    "employee",
+    "tracker"
+  ],
+  "author": "David Yu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dyu4848/team-profile/issues"
+  },
+  "homepage": "https://github.com/Dyu4848/team-profile#readme"
+}
