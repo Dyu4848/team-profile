@@ -10,7 +10,7 @@ test("Makes employee object", () => {
   test("Setting name of an employee", () => {
     const name = 'David';
     const employee = new Employee(name);
-    expect(employee.name).toBe('object');
+    expect(employee.name).toBe(name);
   });
   
   // Test setting id of an employee
@@ -31,7 +31,7 @@ test("Makes employee object", () => {
   test("Testing get name method from getName()", () => {
     const testName = 'David';
     const employee = new Employee(testName);
-    expect(expect.getName()).toBe(testName);
+    expect(employee.getName()).toBe(testName);
     });
   
   // Test get id method
