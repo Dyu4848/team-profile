@@ -1,6 +1,6 @@
 // 1.
 // import manager, engineer, intern files with require()
-const manager = require('./lib/Manager');
+const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
@@ -19,7 +19,6 @@ const util = require('util');
 // 2.
 // import page-template.js from subfoler src with require and assign it to a variable to be called later to render html
 const renderHTML = require('./src/page-template');
-const Manager = require('./lib/Manager');
 const { createConnection } = require('net');
 
 // Async functions
@@ -39,7 +38,7 @@ const teamString = ``;
 console.log('Welcome to the team profile generator')
 // 6.
 // make call to create manager function to start the main process
-createManager();
+createTeam();
 
 // 7.
 // create manager function
@@ -48,6 +47,41 @@ createManager();
 // - push the manager object to the employee member array
 // - push the manager id to the employee id array
 // - make call to the create team function
+
+
+
+function createTeam() {
+    inquirer.prompt([
+        {
+            name: 'addEmployeePrompt',
+            type: 'list',
+            message: 'Please choose the role that is needed for the team.',
+            choices: ['Manager', 'Engineer', 'Intern', 'Exit']
+        }
+    ])
+    .then((response) => {
+        console.log(response);
+        if (response.addEmployeePrompt === 'Manager') {
+            createManager();
+        } else if (response.addEmployeePrompt === 'Engineer') {
+            addEngineer();
+        } else if (response.addEmployeePrompt === 'Intern') {
+            addIntern();
+        } else if (response.addEmployeePrompt === 'Exit') {
+            buildTeam();
+        }
+    })
+};
+
+
+
+// 8.
+// create team function
+// - prompt user with the list of choices for Engineer, Intern, or End of adding employee for the team
+// - in .then callback function check what the user choice is and make call to the corresponding functions respectively
+// - make call to add-engineer-function if the choice is engineer
+// - make call to add-intern-function if choice is intern
+// - make call to build-team function if choice is end of adding employee
 
 function createManager() {
     inquirer.prompt([
@@ -73,39 +107,11 @@ function createManager() {
         }
     ])
     .then(answers => {
-        const manager = new Manager(answers.managerName, answers.manageId, answers.managerEmail, answers.managerOfficeNumber);
+        const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber);
         teamArray.push(manager);
         createTeam();
     })
 }
-
-// 8.
-// create team function
-// - prompt user with the list of choices for Engineer, Intern, or End of adding employee for the team
-// - in .then callback function check what the user choice is and make call to the corresponding functions respectively
-// - make call to add-engineer-function if the choice is engineer
-// - make call to add-intern-function if choice is intern
-// - make call to build-team function if choice is end of adding employee
-
-function createTeam() {
-    inquirer.prompt([
-        {
-            name: 'addEmployeePrompt',
-            type: 'list',
-            message: 'Please choose the role that is needed for the team.',
-            choices: ['Manager', 'Engineer', 'Intern', 'Exit']
-        }
-    ])
-    .then((response) => {
-        if (response.addEmployeePrompt === 'Manager') {
-            createManager();
-        } else if (response.addEmployeePrompt === 'Engineer') {
-            addEngineer();
-        } else if (response.addEmployeePropmt === 'Intern') {
-            addIntern();
-        }
-    })
-};
 
 // 8.
 // add engineer function
@@ -191,8 +197,12 @@ function addIntern() {
 // - make call to fs write file function passing the html file path, html variable
 
 function buildTeam() {
-    console.log('Team has been built')
-    fs.writeFileSync(outputPath, generateTeam(teamArray), 'UTF-8')
+    console.log('Team has been built');
+    
+    fs.writeFileSync(path.join('dist', 'index.html'), renderHTML(teamArray));
+    
 }
+
+
 
 
